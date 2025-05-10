@@ -1,0 +1,944 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabor Colombiano - Delicias de mi Tierra</title>
+    <link rel="icon" href="https://i.postimg.cc/qRYfT2fs/saborcol.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Montserrat:wght@800&display=swap');
+        
+        :root {
+            --amarillo: #F9D71C;
+            --azul: #003366;
+            --rojo: #CC0000;
+            --verde: #006633;
+            --blanco: #FFFFFF;
+            --negro: #333333;
+            --gris: #F5F5F5;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--gris);
+            color: var(--negro);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--amarillo), var(--rojo));
+            color: var(--blanco);
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .titulo-principal {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 0 var(--azul);
+            animation: aparecer 1.5s ease;
+        }
+        
+        .subtitulo {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            animation: deslizar 1s ease 0.5s forwards;
+            opacity: 0;
+        }
+        
+        nav {
+            background-color: var(--blanco);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .contenedor-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-weight: 800;
+            color: var(--rojo);
+            font-size: 1.8rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .menu {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .menu a {
+            text-decoration: none;
+            color: var(--negro);
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .menu a:hover {
+            color: var(--rojo);
+        }
+        
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--amarillo);
+            transition: width 0.3s;
+        }
+        
+        .menu a:hover::after {
+            width: 100%;
+        }
+        
+        .boton-reserva {
+            background-color: var(--verde);
+            color: var(--blanco);
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .boton-reserva:hover {
+            background-color: var(--azul);
+            transform: scale(1.05);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .seccion-titulo {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .seccion-titulo h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--azul);
+            display: inline-block;
+            position: relative;
+        }
+        
+        .seccion-titulo h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(to right, var(--amarillo), var(--rojo));
+            margin: 1rem auto;
+            border-radius: 5px;
+        }
+        
+        .filtros {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .boton-filtro {
+            padding: 0.7rem 1.8rem;
+            background-color: var(--blanco);
+            border: 2px solid var(--amarillo);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .boton-filtro:hover, .boton-filtro.activo {
+            background-color: var(--amarillo);
+            color: var(--negro);
+            border-color: var(--amarillo);
+        }
+        
+        .grid-comidas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tarjeta-comida {
+            background-color: var(--blanco);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tarjeta-comida:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .imagen-comida {
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .imagen-comida img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .tarjeta-comida:hover .imagen-comida img {
+            transform: scale(1.1);
+        }
+        
+        .etiqueta-popular {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--rojo);
+            color: var(--blanco);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .info-comida {
+            padding: 1.5rem;
+        }
+        
+        .encabezado-comida {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .nombre-comida {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--azul);
+        }
+        
+        .origen-comida {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .bandera {
+            width: 25px;
+            height: 15px;
+            border-radius: 3px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        
+        .descripcion-comida {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .pie-comida {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .precio {
+            font-weight: 800;
+            color: var(--verde);
+            font-size: 1.4rem;
+        }
+        
+        .boton-carrito {
+            background-color: var(--amarillo);
+            color: var(--negro);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .boton-carrito:hover {
+            background-color: var(--rojo);
+            color: var(--blanco);
+        }
+        
+        .seccion-especial {
+            background-color: var(--azul);
+            padding: 4rem 0;
+            margin: 4rem 0;
+            color: var(--blanco);
+            text-align: center;
+        }
+        
+        .contenedor-especial {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .seccion-especial h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .seccion-especial p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .boton-especial {
+            background-color: var(--amarillo);
+            color: var(--negro);
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        .boton-especial:hover {
+            background-color: var(--blanco);
+            transform: scale(1.05);
+        }
+        
+        .seccion-contacto {
+            background-color: var(--blanco);
+            padding: 4rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .formulario-contacto {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .campo-formulario {
+            margin-bottom: 1.5rem;
+        }
+        
+        .campo-formulario label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--azul);
+        }
+        
+        .campo-formulario input,
+        .campo-formulario textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .campo-formulario textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .campo-completo {
+            grid-column: span 2;
+        }
+        
+        .boton-enviar {
+            background-color: var(--verde);
+            color: var(--blanco);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        .boton-enviar:hover {
+            background-color: var(--azul);
+        }
+        
+        .info-contacto {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .tarjeta-contacto {
+            background-color: var(--blanco);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .tarjeta-contacto:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .icono-contacto {
+            font-size: 2.5rem;
+            color: var(--rojo);
+            margin-bottom: 1rem;
+        }
+        
+        .tarjeta-contacto h3 {
+            color: var(--azul);
+            margin-bottom: 1rem;
+        }
+        
+        .tarjeta-contacto p {
+            color: #666;
+        }
+        
+        footer {
+            background-color: var(--negro);
+            color: var(--blanco);
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .contenedor-footer {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+        
+        .columna-footer h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            color: var(--amarillo);
+        }
+        
+        .columna-footer h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 50px;
+            height: 3px;
+            background-color: var(--rojo);
+        }
+        
+        .columna-footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .columna-footer ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .columna-footer ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .columna-footer ul li a:hover {
+            color: var(--amarillo);
+        }
+        
+        .redes-sociales {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .redes-sociales a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: var(--blanco);
+            transition: all 0.3s;
+        }
+        
+        .redes-sociales a:hover {
+            background-color: var(--rojo);
+            transform: translateY(-3px);
+        }
+        
+        .derechos {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        @keyframes aparecer {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes deslizar {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes latido {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .latido {
+            animation: latido 2s infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .contenedor-nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .menu {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .titulo-principal {
+                font-size: 2.5rem;
+            }
+            
+            .subtitulo {
+                font-size: 1.2rem;
+            }
+            
+            .grid-comidas {
+                grid-template-columns: 1fr;
+            }
+            
+            .formulario-contacto {
+                grid-template-columns: 1fr;
+            }
+            
+            .campo-completo {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="titulo-principal">Sabor Colombiano</h1>
+        <p class="subtitulo">Los auténticos sabores de nuestra tierra</p>
+    </header>
+    
+    <nav>
+        <div class="contenedor-nav">
+            <div class="logo">SABOR COL</div>
+            <div class="menu">
+                <a href="#inicio">Inicio</a>
+                <a href="#menu">Menú</a>
+                <a href="#especiales">Especiales</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <button class="boton-reserva">Reservar Mesa</button>
+        </div>
+    </nav>
+    
+    <main>
+        <section id="inicio">
+            <div class="seccion-titulo">
+                <h2>Platos Destacados</h2>
+            </div>
+            
+            <div class="filtros">
+                <button class="boton-filtro activo" data-categoria="todos">Todos</button>
+                <button class="boton-filtro" data-categoria="bogota">Bogotá</button>
+                <button class="boton-filtro" data-categoria="paisa">Paisa</button>
+                <button class="boton-filtro" data-categoria="costeno">Costeño</button>
+                <button class="boton-filtro" data-categoria="llanero">Llanero</button>
+            </div>
+            
+            <div class="grid-comidas">
+                <div class="tarjeta-comida" data-categoria="bogota">
+                    <div class="imagen-comida">
+                        <img src="https://images.unsplash.com/photo-1604908177453-7462950a6a3b" alt="Ajiaco">
+                        <span class="etiqueta-popular">Popular</span>
+                    </div>
+                    <div class="info-comida">
+                        <div class="encabezado-comida">
+                            <h3 class="nombre-comida">Ajiaco Santafereño</h3>
+                            <div class="origen-comida">
+                                <img src="https://flagcdn.com/w20/co.png" class="bandera" alt="Colombia">
+                                <span>Bogotá</span>
+                            </div>
+                        </div>
+                        <p class="descripcion-comida">Sopa tradicional con pollo, tres tipos de papa, guascas, alcaparras y crema de leche. Acompañado de aguacate y arroz.</p>
+                        <div class="pie-comida">
+                            <span class="precio">$25.900 COP</span>
+                            <button class="boton-carrito">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tarjeta-comida" data-categoria="paisa">
+                    <div class="imagen-comida">
+                        <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b" alt="Bandeja Paisa">
+                    </div>
+                    <div class="info-comida">
+                        <div class="encabezado-comida">
+                            <h3 class="nombre-comida">Bandeja Paisa</h3>
+                            <div class="origen-comida">
+                                <img src="https://flagcdn.com/w20/co.png" class="bandera" alt="Colombia">
+                                <span>Antioquia</span>
+                            </div>
+                        </div>
+                        <p class="descripcion-comida">Plato insignia con frijoles, arroz, carne molida, chicharrón, chorizo, huevo frito, aguacate, arepa y plátano maduro.</p>
+                        <div class="pie-comida">
+                            <span class="precio">$32.500 COP</span>
+                            <button class="boton-carrito">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tarjeta-comida" data-categoria="costeno">
+                    <div class="imagen-comida">
+                        <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b" alt="Sancocho">
+                        <span class="etiqueta-popular">Recomendado</span>
+                    </div>
+                    <div class="info-comida">
+                        <div class="encabezado-comida">
+                            <h3 class="nombre-comida">Sancocho de Pescado</h3>
+                            <div class="origen-comida">
+                                <img src="https://flagcdn.com/w20/co.png" class="bandera" alt="Colombia">
+                                <span>Caribe</span>
+                            </div>
+                        </div>
+                        <p class="descripcion-comida">Sopa espesa con pescado fresco, yuca, plátano, ñame, cilantro y condimentos. Acompañado de arroz con coco y patacones.</p>
+                        <div class="pie-comida">
+                            <span class="precio">$28.700 COP</span>
+                            <button class="boton-carrito">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tarjeta-comida" data-categoria="llanero">
+                    <div class="imagen-comida">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" alt="Mamona">
+                    </div>
+                    <div class="info-comida">
+                        <div class="encabezado-comida">
+                            <h3 class="nombre-comida">Carne a la Llanera</h3>
+                            <div class="origen-comida">
+                                <img src="https://flagcdn.com/w20/co.png" class="bandera" alt="Colombia">
+                                <span>Llanos</span>
+                            </div>
+                        </div>
+                        <p class="descripcion-comida">Corte premium de res asado lentamente en vara de madera, servido con yuca cocida, ají llanero y guacamole.</p>
+                        <div class="pie-comida">
+                            <span class="precio">$36.900 COP</span>
+                            <button class="boton-carrito">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tarjeta-comida" data-categoria="bogota">
+                    <div class="imagen-comida">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947" alt="Tamal">
+                    </div>
+                    <div class="info-comida">
+                        <div class="encabezado-comida">
+                            <h3 class="nombre-comida">Tamal Tolimense</h3>
+                            <div class="origen-comida">
+                                <img src="https://flagcdn.com/w20/co.png" class="bandera" alt="Colombia">
+                                <span>Tolima</span>
+                            </div>
+                        </div>
+                        <p class="descripcion-comida">Masa de maíz rellena de carne de cerdo, pollo, huevo, arvejas y zanahoria, envuelta en hoja de plátano y cocida al vapor.</p>
+                        <div class="pie-comida">
+                            <span class="precio">$18.500 COP</span>
+                            <button class="boton-carrito">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tarjeta-comida" data-categoria="costeno">
+                    <div class="imagen-comida">
+                        <img src="https://images.unsplash.com/photo-1609743522653-52354461eb27" alt="Arepa">
+                        <span class="etiqueta-popular">Nuevo</span>
+                    </div>
+                    <div class="info-comida">
+                        <div class="encabezado-comida">
+                            <h3 class="nombre-comida">Arepa de Huevo</h3>
+                            <div class="origen-comida">
+                                <img src="https://flagcdn.com/w20/co.png" class="bandera" alt="Colombia">
+                                <span>Caribe</span>
+                            </div>
+                        </div>
+                        <p class="descripcion-comida">Arepa de maíz amarillo frita rellena de huevo, servida con suero costeño y ají picante. Tradición de la costa Atlántica.</p>
+                        <div class="pie-comida">
+                            <span class="precio">$12.900 COP</span>
+                            <button class="boton-carrito">
+                                <i class="fas fa-shopping-cart"></i>
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="especiales" class="seccion-especial latido">
+            <div class="contenedor-especial">
+                <h2>Especial del Día</h2>
+                <p>Hoy te ofrecemos nuestro tradicional Lechona Tolimense, preparada durante 12 horas con arvejas, carne de cerdo y especias, acompañada de arepa blanca y ají. ¡No te lo pierdas!</p>
+                <button class="boton-especial">Pedir Ahora</button>
+            </div>
+        </section>
+        
+        <section id="contacto" class="seccion-contacto">
+            <div class="seccion-titulo">
+                <h2>Contáctanos</h2>
+            </div>
+            
+            <form class="formulario-contacto">
+                <div class="campo-formulario">
+                    <label for="nombre">Nombre Completo</label>
+                    <input type="text" id="nombre" required>
+                </div>
+                
+                <div class="campo-formulario">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="campo-formulario campo-completo">
+                    <label for="asunto">Asunto</label>
+                    <input type="text" id="asunto" required>
+                </div>
+                
+                <div class="campo-formulario campo-completo">
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" required></textarea>
+                </div>
+                
+                <div class="campo-formulario campo-completo">
+                    <button type="submit" class="boton-enviar">Enviar Mensaje</button>
+                </div>
+            </form>
+            
+            <div class="info-contacto">
+                <div class="tarjeta-contacto">
+                    <div class="icono-contacto">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Dirección</h3>
+                    <p>Mi casa 👍🏻</p>
+                </div>
+                
+                <div class="tarjeta-contacto">
+                    <div class="icono-contacto">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>Teléfono</h3>
+                    <p>+57 315 8343 851</p>
+                </div>
+                
+                <div class="tarjeta-contacto">
+                    <div class="icono-contacto">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Correo Electrónico</h3>
+                    <p>info@saborcolombiano.com<br>anyrodcrz@gmail.com</p>
+                </div>
+                
+                <div class="tarjeta-contacto">
+                    <div class="icono-contacto">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Horario</h3>
+                    <p>Todos los dias</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="contenedor-footer">
+            <div class="columna-footer">
+                <h3>Sobre Nosotros</h3>
+                <p>El sabor de mi region.</p>
+                <div class="redes-sociales">
+                    <a href="https://saborcol.vercel.app/notfound.html"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://saborcol.vercel.app/notfound.html"><i class="fab fa-instagram"></i></a>
+                    <a href="https:/wa.me/+573158343851"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.youtube.com/@KaitoNekox"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="columna-footer">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#menu">Menú</a></li>
+                    <li><a href="#especiales">Especiales</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="columna-footer">
+                <h3>Platos Populares</h3>
+                <ul>
+                    <li><a href="#">Ajiaco Santafereño</a></li>
+                    <li><a href="#">Bandeja Paisa</a></li>
+                    <li><a href="#">Sancocho de Pescado</a></li>
+                    <li><a href="#">Lechona Tolimense</a></li>
+                    <li><a href="#">Arepa de Huevo</a></li>
+                </ul>
+            </div>
+            
+            <div class="columna-footer">
+                <h3>Newsletter</h3>
+                <p>Suscríbete para recibir promociones y novedades.</p>
+                <form>
+                    <input type="email" placeholder="Tu correo" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border-radius: 4px; border: none;">
+                    <button type="submit" style="background-color: var(--rojo); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Suscribirse</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="derechos">
+            <p>&copy; <span id="anio"></span> Anyarli Fabiana. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const anioActual = new Date().getFullYear();
+            document.getElementById('anio').textContent = anioActual;
+            
+            const botonesFiltro = document.querySelectorAll('.boton-filtro');
+            const tarjetasComida = document.querySelectorAll('.tarjeta-comida');
+            
+            botonesFiltro.forEach(boton => {
+                boton.addEventListener('click', function() {
+                    const categoria = this.dataset.categoria;
+                    
+                    botonesFiltro.forEach(btn => btn.classList.remove('activo'));
+                    this.classList.add('activo');
+                    
+                    tarjetasComida.forEach(tarjeta => {
+                        if(categoria === 'todos' || tarjeta.dataset.categoria === categoria) {
+                            tarjeta.style.display = 'block';
+                        } else {
+                            tarjeta.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            const botonesCarrito = document.querySelectorAll('.boton-carrito');
+            botonesCarrito.forEach(boton => {
+                boton.addEventListener('click', function() {
+                    const nombrePlato = this.closest('.tarjeta-comida').querySelector('.nombre-comida').textContent;
+                    const precioPlato = this.closest('.tarjeta-comida').querySelector('.precio').textContent;
+                    
+                    alert(`Has añadido ${nombrePlato} (${precioPlato}) a tu pedido. ¡Gracias!`);
+                    
+                    this.innerHTML = '<i class="fas fa-check"></i> Añadido';
+                    this.style.backgroundColor = '#28a745';
+                    
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-shopping-cart"></i> Añadir';
+                        this.style.backgroundColor = '';
+                    }, 2000);
+                });
+            });
+            
+            const botonReserva = document.querySelector('.boton-reserva');
+            botonReserva.addEventListener('click', function() {
+                alert('¡Gracias por tu interés! Redirigiéndote al sistema de reservas...');
+            });
+            
+            const botonEspecial = document.querySelector('.boton-especial');
+            botonEspecial.addEventListener('click', function() {
+                alert('¡Tu pedido del Especial del Día ha sido registrado! Pronto nos comunicaremos contigo.');
+            });
+            
+            const formularioContacto = document.querySelector('.formulario-contacto');
+            formularioContacto.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Gracias por tu mensaje. Nos pondremos en contacto contigo pronto.');
+                this.reset();
+            });
+        });
+    </script>
+</body>
+</html>
