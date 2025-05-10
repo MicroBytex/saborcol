@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404 - Página no encontrada</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 4em;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+        }
+
+        .astronaut {
+            position: relative;
+            width: 100px;
+            height: 150px;
+            margin: 0 auto 20px;
+        }
+
+        .helmet {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background-color: #ddd;
+            border-radius: 50%;
+            border: 5px solid #aaa;
+            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .visor {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 30px;
+            background-color: #88c0d0;
+            border-radius: 5px;
+        }
+
+        .body {
+            position: absolute;
+            top: 60px;
+            width: 80px;
+            height: 80px;
+            background-color: #eee;
+            border-radius: 10px;
+        }
+
+        .arm-left, .arm-right {
+            position: absolute;
+            top: 70px;
+            width: 20px;
+            height: 50px;
+            background-color: #eee;
+            border-radius: 10px;
+        }
+
+        .arm-left {
+            left: -10px;
+            transform: rotate(-20deg);
+        }
+
+        .arm-right {
+            right: -10px;
+            transform: rotate(20deg);
+        }
+
+        .leg-left, .leg-right {
+            position: absolute;
+            top: 130px;
+            width: 25px;
+            height: 40px;
+            background-color: #ddd;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .leg-left {
+            left: 15px;
+        }
+
+        .leg-right {
+            right: 15px;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        .star-1 {
+            top: 20%;
+            left: 10%;
+            width: 5px;
+            height: 5px;
+            animation-delay: 0.5s;
+        }
+
+        .star-2 {
+            top: 40%;
+            right: 15%;
+            width: 3px;
+            height: 3px;
+            animation-delay: 1.2s;
+        }
+
+        .star-3 {
+            bottom: 30%;
+            left: 30%;
+            width: 4px;
+            height: 4px;
+            animation-delay: 0.8s;
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="astronaut">
+            <div class="helmet">
+                <div class="visor"></div>
+            </div>
+            <div class="body"></div>
+            <div class="arm-left"></div>
+            <div class="arm-right"></div>
+            <div class="leg-left"></div>
+            <div class="leg-right"></div>
+        </div>
+        <h1>¡Oops! Error 404</h1>
+        <p>La página que estás buscando no se ha encontrado. <br> Puede que la dirección sea incorrecta o que la página ya no exista.</p>
+        <a href="/" class="button">Volver al inicio</a>
+    </div>
+
+    <div class="star star-1"></div>
+    <div class="star star-2"></div>
+    <div class="star star-3"></div>
+
+    <script>
+        // Pequeña animación para las estrellas (opcional)
+        const stars = document.querySelectorAll('.star');
+
+        stars.forEach(star => {
+            const randomX = Math.random() * 100;
+            const randomY = Math.random() * 100;
+            star.style.left = `${randomX}vw`;
+            star.style.top = `${randomY}vh`;
+        });
+    </script>
+</body>
+</html>
